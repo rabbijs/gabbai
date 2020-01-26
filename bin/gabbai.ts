@@ -1,5 +1,8 @@
+#!/usr/bin/env node
 
-require('dotenv').config();
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const argv = require('yargs').argv
 
@@ -12,6 +15,23 @@ const systemInfo = require('systeminformation')
 const INTERVAL = 60000;
 
 (async () => {
+
+
+  try {
+
+    let defaultEnvironmentPath = '/etc/gabbai/gabbai.env';
+
+    if (require('fs').existsSync(defaultEnvironmentPath)) {
+
+      log.info(`loading .env configuration from ${defaultEnvironmentPath}`);
+
+      dotenv.config({ path: defaultEnvironmentPath });
+    }
+
+  } catch(err) {
+
+    console.error(err)
+  }
 
   const ip = await publicIp.v4();
 
@@ -53,9 +73,9 @@ const INTERVAL = 60000;
       network
     });
 
-    console.log(message);
-
     channel.publish('rabbi', 'gabbai.systeminfo', Buffer.from(message));
+
+    log.info(`gabbai.systeminfo.published`);
 
   }, INTERVAL);
 

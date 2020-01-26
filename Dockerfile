@@ -17,5 +17,5 @@ RUN tsc
 # Bundle app source
 COPY . /usr/src/app
 
-CMD ./dist/gabbai.js
+CMD node ./dist/gabbai.js
 

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,13 +9,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-require('dotenv').config();
+const dotenv = require('dotenv');
+dotenv.config();
 const argv = require('yargs').argv;
 const rabbi_1 = require("rabbi");
 const publicIp = require('public-ip');
 const systemInfo = require('systeminformation');
 const INTERVAL = 60000;
 (() => __awaiter(this, void 0, void 0, function* () {
+    try {
+        let defaultEnvironmentPath = '/etc/gabbai/gabbai.env';
+        if (require('fs').existsSync(defaultEnvironmentPath)) {
+            rabbi_1.log.info(`loading .env configuration from ${defaultEnvironmentPath}`);
+            dotenv.config({ path: defaultEnvironmentPath });
+        }
+    }
+    catch (err) {
+        console.error(err);
+    }
     const ip = yield publicIp.v4();
     const amqp = yield rabbi_1.getConnection();
     const channel = yield amqp.createChannel();
@@ -41,8 +53,8 @@ const INTERVAL = 60000;
             docker,
             network
         });
-        console.log(message);
         channel.publish('rabbi', 'gabbai.systeminfo', Buffer.from(message));
+        rabbi_1.log.info(`gabbai.systeminfo.published`);
     }), INTERVAL);
 }))();
 //# sourceMappingURL=gabbai.js.map
