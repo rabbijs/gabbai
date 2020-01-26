@@ -1,0 +1,64 @@
+
+require('dotenv').config();
+
+const argv = require('yargs').argv
+
+import { Actor, log, getConnection } from 'rabbi';
+
+const publicIp = require('public-ip');
+
+const systemInfo = require('systeminformation')
+
+const INTERVAL = 60000;
+
+(async () => {
+
+  const ip = await publicIp.v4();
+
+  const amqp = await getConnection();
+
+  const channel = await amqp.createChannel();
+
+  let actor = Actor.create({
+  
+    exchange: 'rabbi',
+    
+    routingkey: 'gabbai.ping',
+
+    queue: `rabbi.gabbai.ping:${ip}`
+
+  })
+  .start(async (channel, msg, json) => {
+
+    channel.ack(msg);
+
+  });
+
+  log.info('gabbai.started', ip);
+
+  let interval = setInterval(async () => {
+
+    let cpu = await systemInfo.cpu();
+    let mem = await systemInfo.mem();
+    let fs = await systemInfo.fsSize();
+    let docker = await systemInfo.dockerAll();
+    let network = await systemInfo.networkInterfaces();
+
+    const message = JSON.stringify({
+      ip,
+      cpu,
+      mem,
+      fs,
+      docker,
+      network
+    });
+
+    console.log(message);
+
+    channel.publish('rabbi', 'gabbai.systeminfo', Buffer.from(message));
+
+  }, INTERVAL);
+
+})()
+
+

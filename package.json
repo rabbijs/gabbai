@@ -1,0 +1,26 @@
+{
+  "name": "gabbai",
+  "version": "0.1.1",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "gabbai": "./dist/gabbai.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docker:build": "docker build -t rabbijs/gabbai:latest .",
+    "docker:push": "docker push rabbijs/gabbai:latest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^13.5.0",
+    "commander": "^4.1.0",
+    "dotenv": "^8.2.0",
+    "public-ip": "^4.0.0",
+    "rabbi": "^1.10.5",
+    "systeminformation": "^4.20.1",
+    "yargs": "^15.1.0"
+  }
+}
