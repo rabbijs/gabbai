@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv = require('dotenv');
-dotenv.config();
 const argv = require('yargs').argv;
 const rabbi_1 = require("rabbi");
 const publicIp = require('public-ip');
@@ -26,6 +25,7 @@ const INTERVAL = 60000;
     }
     catch (err) {
         console.error(err);
+        dotenv.config();
     }
     const ip = yield publicIp.v4();
     const amqp = yield rabbi_1.getConnection();

@@ -2,8 +2,6 @@
 
 const dotenv = require('dotenv');
 
-dotenv.config();
-
 const argv = require('yargs').argv
 
 import { Actor, log, getConnection } from 'rabbi';
@@ -31,6 +29,8 @@ const INTERVAL = 60000;
   } catch(err) {
 
     console.error(err)
+
+    dotenv.config();
   }
 
   const ip = await publicIp.v4();
