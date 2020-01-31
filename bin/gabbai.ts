@@ -58,27 +58,37 @@ const INTERVAL = 60000;
 
   let interval = setInterval(async () => {
 
-    let cpu = await systemInfo.cpu();
-    let mem = await systemInfo.mem();
-    let fs = await systemInfo.fsSize();
-    let docker = await systemInfo.dockerAll();
-    let network = await systemInfo.networkInterfaces();
-
-    const message = JSON.stringify({
-      ip,
-      cpu,
-      mem,
-      fs,
-      docker,
-      network
-    });
-
-    channel.publish('rabbi', 'gabbai.systeminfo', Buffer.from(message));
-
-    log.info(`gabbai.systeminfo.published`);
+    await publishSystemInfo(channel);
 
   }, INTERVAL);
 
+  await publishSystemInfo(channel);
+
 })()
 
+async function publishSystemInfo(channel) {
+
+  let cpu = await systemInfo.cpu();
+  let mem = await systemInfo.mem();
+  let fs = await systemInfo.fsSize();
+  let docker = await systemInfo.dockerAll();
+  let network = await systemInfo.networkInterfaces();
+  let ip = await publicIp.v4();
+
+  const message = JSON.stringify({
+    ip,
+    cpu,
+    mem,
+    fs,
+    docker,
+    network
+  });
+
+  console.log(message);
+
+  channel.publish('rabbi', 'gabbai.systeminfo', Buffer.from(message));
+
+  log.info(`gabbai.systeminfo.published`);
+
+}
 

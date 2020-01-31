@@ -40,11 +40,18 @@ const INTERVAL = 60000;
     }));
     rabbi_1.log.info('gabbai.started', ip);
     let interval = setInterval(() => __awaiter(this, void 0, void 0, function* () {
+        yield publishSystemInfo(channel);
+    }), INTERVAL);
+    yield publishSystemInfo(channel);
+}))();
+function publishSystemInfo(channel) {
+    return __awaiter(this, void 0, void 0, function* () {
         let cpu = yield systemInfo.cpu();
         let mem = yield systemInfo.mem();
         let fs = yield systemInfo.fsSize();
         let docker = yield systemInfo.dockerAll();
         let network = yield systemInfo.networkInterfaces();
+        let ip = yield publicIp.v4();
         const message = JSON.stringify({
             ip,
             cpu,
@@ -53,8 +60,9 @@ const INTERVAL = 60000;
             docker,
             network
         });
+        console.log(message);
         channel.publish('rabbi', 'gabbai.systeminfo', Buffer.from(message));
         rabbi_1.log.info(`gabbai.systeminfo.published`);
-    }), INTERVAL);
-}))();
+    });
+}
 //# sourceMappingURL=gabbai.js.map
