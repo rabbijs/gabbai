@@ -1720,9 +1720,9 @@ supports-color@^5.3.0:
     has-flag "^3.0.0"
 
 systeminformation@^4.20.1:
-  version "4.20.1"
-  resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-4.20.1.tgz#6196f29f1e0ad851a3962a6050a09b46edf6f89b"
-  integrity sha512-q9Qf8WgYzZ6JvcCYy45aGxCtF/I7CPliwT3kNZHdCFapgbBAl9n2wuYAnmZ66pv6AShQNKEHC9raFrsaZoAu2g==
+  version "4.27.11"
+  resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-4.27.11.tgz#6dbe96e48091444f80dab6c05ee1901286826b60"
+  integrity sha512-U7bigXbOnsB8k1vNHS0Y13RCsRz5/UohiUmND+3mMUL6vfzrpbe/h4ZqewowB+B+tJNnmGFDj08Z8xGfYo45dQ==
 
 teamwork@3.x.x:
   version "3.2.0"
