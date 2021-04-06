@@ -1719,10 +1719,10 @@ supports-color@^5.3.0:
   dependencies:
     has-flag "^3.0.0"
 
-systeminformation@^4.20.1:
-  version "4.20.1"
-  resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-4.20.1.tgz#6196f29f1e0ad851a3962a6050a09b46edf6f89b"
-  integrity sha512-q9Qf8WgYzZ6JvcCYy45aGxCtF/I7CPliwT3kNZHdCFapgbBAl9n2wuYAnmZ66pv6AShQNKEHC9raFrsaZoAu2g==
+systeminformation@^5.6.4:
+  version "5.6.4"
+  resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-5.6.4.tgz#5f32fcb05a5849e2a0e71b182c1f56ce32219310"
+  integrity sha512-b2tvW1R+qjNEoAGgh734EGLgqbDMghjsHRaWo36skAC6JM1tw1pitcGz/REt+qSIRSXbE4PKECojhaSrBRrEmw==
 
 teamwork@3.x.x:
   version "3.2.0"
